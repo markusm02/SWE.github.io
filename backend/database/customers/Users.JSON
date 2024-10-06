@@ -1,0 +1,54 @@
+{
+    "user": { 
+       "uid": "unique-value",
+       "username": "user-name",
+       "passwordHash": "hashed-value",
+       "fullName": "First Last", 
+       "currentCart": [{ 
+           "productId": "product-id-1", "quantity": 2, "price": 19.99 
+           }], 
+       "orderHistory": [{ 
+           "orderId": "order-id-1", "orderDate": "2023-09-30", 
+                "items": [{
+                    "productId": "product-id-1", "quantity": 2, "price": 19.99
+                }], 
+           "totalAmount": 69.97, 
+           "shippingAddress": { 
+               "streetAddress": "123 Street Name", 
+               "city": "City Name", 
+               "state": "State", 
+               "zipCode": "12345" }, 
+           "paymentMethod": "credit-card"
+        }], 
+       "addresses": [{ 
+           "addressId": "address-1", 
+           "streetAddress": "123 Street Name", 
+           "city": "City Name", 
+           "state": "State", 
+           "zipCode": "12345", 
+           "country": "Country" 
+       }], 
+       "paymentMethods": [ { 
+            "paymentMethodId": "payment-method-1",
+           "cardHolderName": "First Last", 
+           "cardType": "Visa", 
+           "lastFourDigits": "1234", 
+           "expDate": "12/2024", 
+           "billingAddress": { 
+               "streetAddress": "123 Street Name", 
+               "city": "City Name", 
+               "state": "State", 
+               "zipCode": "12345" 
+               }
+           } ], 
+       "discounts": { 
+           "firstTimeDiscount": true,
+           "firstTimeDiscountValue": "15%", 
+           "otherDiscounts": [ { 
+               "discountId": "discount-1", 
+               "discountValue": "10%", 
+               "applied": false 
+           } ] 
+       } 
+   }
+}

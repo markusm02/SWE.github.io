@@ -1,0 +1,25 @@
+{ "Products": 
+	[ 
+	{ 
+		"id": "1", 
+		"name": "Classic T-Shirt", 
+		"category": "shirts", 
+		"size": ["S", "M", "L", "XL"], 
+		"color": ["white", "black", "blue"], 
+		"price": 19.99, 
+		"stock": { "S": 50, "M": 40, "L": 60, "XL": 30 }, 
+		"description": "A classic cotton t-shirt.", 
+		"images": ["image1_url", "image2_url"] 
+	}, 
+	{ 
+		"id": "2", 
+		"name": "Winter Jacket", 
+		"category": "jackets", 
+		"size": ["M", "L", "XL"], 
+		"color": ["black", "gray"], 
+		"price": 89.99, 
+		"stock": { "M": 15, "L": 10, "XL": 5 }, 
+		"description": "Warm winter jacket with water resistance.", "images": ["image3_url", "image4_url"] 
+	}
+ ]
+}
