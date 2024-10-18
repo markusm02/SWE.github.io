@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import Carousel from '../Components/Carousel/carousel';
+import Carousel from '../components/Carousel/carousel';
 
 const HomePage = () => {
   const [featuredItems, setFeaturedItems] = useState([]);
