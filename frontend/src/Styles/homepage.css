@@ -1,0 +1,17 @@
+.home-page {
+    background-color: #ffffff;
+    padding-top: 60px;
+}
+
+.featured-section, .categories-section {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 20px;
+    text-align: center;
+}
+
+h2 {
+    margin-bottom: 20x;
+    font-size: 2em;
+    color: #333;
+}

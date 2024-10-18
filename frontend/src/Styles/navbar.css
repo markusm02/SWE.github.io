@@ -1,0 +1,58 @@
+.navbar {
+    position: fixed;
+    top: -1px;
+    width: 80%;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #ececec;
+    box-shadow: 0 0 5rem #0000008a;
+    padding: 10px 0;
+    border-bottom-left-radius: 2rem;
+    border-bottom-right-radius: 2rem;
+    border: 1px solid #00000042;
+}
+
+.navbar-content {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 40px;
+}
+
+.company-name {
+    text-align: start;
+}
+.company-name:hover {
+    background-color: #ddd;
+}
+
+.home-button {
+    text-decoration: none;
+    font-size: 1.2em;
+    font-weight: bold;
+    transition: background-color 0.3s;
+    border-radius: 5px;
+    color: #333;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+.shop-all {
+    text-align: center;
+    margin-right: 100px;
+}
+
+.current-cart {
+    text-align: right;
+}
+
+
+.shop-now-button, .cart-button {
+    text-decoration: none;
+    color: #333;
+    padding: 10px 20px;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.shop-now-button:hover, .cart-button:hover {
+    background-color: #ddd;
+}
