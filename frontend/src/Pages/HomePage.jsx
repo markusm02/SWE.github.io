@@ -10,9 +10,9 @@ import test4 from '../resources/ProductImages/test4.jpg';
 const HomePage = () => {
   const [featuredItems, setFeaturedItems] = useState([
     { productID: 1, name: 'Product 1', image: test1 },
-    { productID: 2, name: 'Product 2', image: test2 },
-    { productID: 3, name: 'Product 3', image: test3 },
-    { productID: 4, name: 'Product 4', image: test4 }
+    // { productID: 2, name: 'Product 2', image: test2 },
+    // { productID: 3, name: 'Product 3', image: test3 },
+    // { productID: 4, name: 'Product 4', image: test4 }
 
   ]);
 
