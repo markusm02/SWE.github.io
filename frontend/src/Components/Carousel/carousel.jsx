@@ -5,11 +5,10 @@ import '../../Styles/carousel.css';
 const Carousel = ({ items }) => {
   const settings = {
     dots: false,
-    infinite: true,
-    slidesToShow: 1,
-    slidesToScroll: 1,
+    infinite: false,
+    slidesToShow: 0,
+    slidesToScroll: 0,
     centerMode: false,
-    centerPadding: '0px',
   };
 
   return (

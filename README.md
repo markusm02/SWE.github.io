@@ -1,5 +1,7 @@
 # SWE Front End
     # cd frontend
+    # Install node 
+    # Install dependencies can copy and paste npm commands into terminal
 
     # Dependencies
         npm install aws-sdk
@@ -15,3 +17,4 @@
         npm install uuid
         npm install @babel/core @babel/cli @babel/preset-env
     
+    # npm start to run frontend
