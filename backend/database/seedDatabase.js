@@ -98,6 +98,18 @@ const testProduct1 = {
 	"images": ["image1_url", "image2_url"]
 };
 
+const testProduct2 = {
+    "productID": "3", 
+	"productName": "Classic Pants",
+	"productCategory": "pants", 
+	"availableSizes": ["S", "M", "L", "XL"], 
+	"availableColors": ["white", "black", "blue", "green"], 
+	"price": 25.00, 
+	"availableStock": { "S": 40, "M": 40, "L": 60, "XL": 20 },
+	"productDescription": "Classic cotton pants.", 
+	"images": ["image3_url", "image4_url"]
+};
+
 // Test data for a product
 const testProduct = {
     productId: '1',
@@ -111,10 +123,11 @@ const testProduct = {
     images: ['image1_url', 'image2_url']
 };
 
+
+
 (async () => {
     try {
-        await addCustomer(testCustomer1);
-        await addProduct(testProduct1);
+        await addProduct(testProduct2);
         console.log('Test data inserted successfully!');
     } catch (error) {
         console.error('Error inserting test data:', error);

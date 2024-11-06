@@ -8,25 +8,28 @@ import test3 from '../resources/ProductImages/test3.jpg';
 import test4 from '../resources/ProductImages/test4.jpg';
 
 const HomePage = () => {
-  const [featuredItems, setFeaturedItems] = useState([
-    { productID: 1, name: 'Product 1', image: test1 },
-    // { productID: 2, name: 'Product 2', image: test2 },
-    // { productID: 3, name: 'Product 3', image: test3 },
-    // { productID: 4, name: 'Product 4', image: test4 }
+  // const [featuredItems, setFeaturedItems] = useState([
+  //   { productID: 1, name: 'Product 1', image: test1 },
+  //   { productID: 2, name: 'Product 2', image: test2 },
+  //   { productID: 3, name: 'Product 3', image: test3 },
+  //   { productID: 4, name: 'Product 4', image: test4 }
 
-  ]);
+  // ]);
+  const [featuredItems, setFeaturedItems] = useState([]);
 
-  // useEffect(() => {
-  //   const fetchFeaturedItems = async () => {
-  //     try {
-  //       const response = await axios.get('https://api.yourdomain.com/products/featured');
-  //       setFeaturedItems(response.data);
-  //     } catch (error) {
-  //       console.error('Error fetching featured items:', error);
-  //     }
-  //   };
-  //   fetchFeaturedItems();
-  // }, []);
+  useEffect(() => {
+    const fetchFeaturedItems = async () => {
+      try {
+        const response = await axios.get(`http://localhost:4000/products`);
+        setFeaturedItems(response.data);
+      } catch (error) {
+        console.error('Error fetching featured items:', error);
+      }
+    };
+    fetchFeaturedItems();
+  }, []);
+  console.log('featuredItems');
+  console.log(featuredItems);
 
   return (
     <div className='home-page'>

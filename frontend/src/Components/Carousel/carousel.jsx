@@ -1,29 +1,40 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Slider from 'react-slick';
+import { useNavigate } from 'react-router-dom';
 import '../../Styles/carousel.css';
 
 const Carousel = ({ items }) => {
-  const settings = {
-    dots: false,
-    infinite: false,
-    slidesToShow: 0,
-    slidesToScroll: 0,
-    centerMode: false,
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const navigate = useNavigate();
+
+  const handleNext = () => {
+    setCurrentIndex((prevIndex) => (prevIndex + 1) % items.length);
+  };
+
+  const handlePrev = () => {
+    setCurrentIndex((prevIndex) => (prevIndex - 1 + items.length) % items.length);
+  };
+
+  const handleItemClick = (productID) => {
+    navigate(`/products/${productID}`);
   };
 
   return (
-    <Slider {...settings}>
-      {items.map(item => (
-        <div key={item.productID} className='carousel-item'>
+    <div className='carousel'>
+      {items.length > 0 && (
+        <div className='carousel-item'>
           <img
-            src={item.image}
-            alt={item.name}
+            src={items[currentIndex].image}
+            alt={items[currentIndex].productName}
             className='carousel-image'
+            onClick={() => handleItemClick(items[currentIndex].productID)}
           />
-          <p>{item.name}</p>
+          <p>{items[currentIndex].productName}</p>
         </div>
-      ))}
-    </Slider>
+      )}
+      <button onClick={handlePrev} className='carousel-button'>Previous</button>
+      <button onClick={handleNext} className='carousel-button'>Next</button>
+    </div>
   );
 };
 
