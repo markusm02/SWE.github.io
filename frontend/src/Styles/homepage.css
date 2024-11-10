@@ -1,17 +1,24 @@
 .home-page {
     background-color: #ffffff;
-    padding-top: 60px;
+    padding-top: 40px;
 }
 
 .featured-section, .categories-section {
     max-width: 1200px;
-    margin: 20px auto;
-    padding: 20px;
+    margin: auto;
+    padding: 10px;
     text-align: center;
 }
 
 h2 {
-    margin-bottom: 20x;
-    font-size: 2em;
+    margin-bottom: 20px;
+    font-size: 3em;
     color: #333;
 }
+
+.category-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: 20px;
+  }

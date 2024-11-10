@@ -1,22 +1,42 @@
 import { Link } from 'react-router-dom';
 import React, { useState, useEffect, useRef } from 'react';
+import axios from 'axios';
+import AccountHandling from '../Account/AccountHandling.jsx';
+import CartHandler from '../CartHandling/CartHandler.jsx';
 import '../../Styles/navbar.css';
 
 const Navbar = ({toggleBlur}) => {
     const [showCart, setShowCart] = useState(false);
     const [showAccount, setShowAccount] = useState(false);
+    const [cartItems, setCartItems] = useState([]);
     const overlayRef = useRef(null);
 
-    const handleCartClick = () => {
+    const refreshCart = async () => {
+        const storedUser = localStorage.getItem('user');
+        if (storedUser) {
+            const user = JSON.parse(storedUser);
+            try {
+                const response = await axios.get(`http://localhost:4000/users/${user.customerID}`);
+                setCartItems(response.data.currentCart || []);
+            } catch (error) {
+                console.error('Error fetching cart data:', error);
+            }
+        }
+    };
+
+    const handleCartClick = async () => {
         setShowCart(!showCart);
         setShowAccount(false);
-        // if (showAccount) setShowAccount(false);
         toggleBlur(!showCart);
+
+        if (!showCart) {
+            await refreshCart();
+            
+        }
     };
 
     const handleAccountClick = () => {
         setShowAccount(!showAccount);
-        // if (showCart) setShowCart(false);
         setShowCart(false);
         toggleBlur(!showAccount);
     };
@@ -62,8 +82,8 @@ const Navbar = ({toggleBlur}) => {
             </div>
             {(showCart || showAccount) && (
                 <div className='overlay' ref={overlayRef}>
-                    {showCart && <div className='cart-content'>Cart Details</div>}
-                    {showAccount && <div className='account-content'>Account Details</div>}
+                    {showCart && <CartHandler cartItems={cartItems} />}
+                    {showAccount && <AccountHandling toggleBlur={toggleBlur} />}
                 </div>
             )}
         </div>

@@ -19,9 +19,9 @@ const testCustomer1 = {
     "firstName": "Test",
     "lastName": "Last",
     "currentCart": [{ 
-            "productID": "1", "quantity": 2, "price": 19.99 
+            "productName": "Classic Pants", "productID": "3", "quantity": 2, "price": 19.99 
         },{
-            "productID": "2", "quantity": 1, "price": 10.00
+            "productName": "Classic T-Shirt", "productID": "1", "quantity": 1, "price": 10.00
         }], 
     "orderHistory": [{ 
         "orderId": "1", "orderDate": "2023-09-30", 
@@ -127,6 +127,7 @@ const testProduct = {
 
 (async () => {
     try {
+        await addCustomer(testCustomer1);
         await addProduct(testProduct2);
         console.log('Test data inserted successfully!');
     } catch (error) {
