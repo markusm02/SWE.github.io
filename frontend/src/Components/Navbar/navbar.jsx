@@ -82,7 +82,7 @@ const Navbar = ({toggleBlur}) => {
             </div>
             {(showCart || showAccount) && (
                 <div className='overlay' ref={overlayRef}>
-                    {showCart && <CartHandler cartItems={cartItems} />}
+                    {showCart && <CartHandler cartItems={cartItems} refreshCart={refreshCart}/>}
                     {showAccount && <AccountHandling toggleBlur={toggleBlur} />}
                 </div>
             )}

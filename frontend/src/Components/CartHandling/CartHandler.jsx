@@ -6,7 +6,9 @@ const CartHandler = ({ cartItems, refreshCart }) => {
     const [discountCode, setDiscountCode] = useState('');
     const [shippingOption, setShippingOption] = useState('regular');
     const [totalCost, setTotalCost] = useState(0);
-    const [user, setUser] = useState(null); // Add state for user
+    const [user, setUser] = useState(null);
+    const [isDiscountApplied, setIsDiscountApplied] = useState(false);
+    const [discountError, setDiscountError] = useState('');
     const TAX_RATE = 0.0825;
     const EXPRESS_SHIPPING_COST = 8.00;
 
@@ -15,14 +17,18 @@ const CartHandler = ({ cartItems, refreshCart }) => {
         if (storedUser) {
             setUser(JSON.parse(storedUser));
         }
-    }, [showPurchaseOverlay]); // Fetch user data when overlay is shown
+    }, []);
 
-    const calculateTotal = () => {
-        let subtotal = cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0);
-        let tax = subtotal * TAX_RATE;
-        let shippingCost = shippingOption === 'express' ? EXPRESS_SHIPPING_COST : 0;
-        return subtotal + tax + shippingCost;
-    };
+    useEffect(() => {
+        const calculateTotal = () => {
+            let subtotal = cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0);
+            let tax = subtotal * TAX_RATE;
+            let shippingCost = shippingOption === 'express' ? EXPRESS_SHIPPING_COST : 0;
+            let discount = isDiscountApplied && discountCode === 'newcustomer' ? 0.1 * (subtotal + tax + shippingCost) : 0;
+            return subtotal + tax + shippingCost - discount;
+        };
+        setTotalCost(calculateTotal());
+    }, [cartItems, shippingOption, discountCode, isDiscountApplied]);
 
     const handleRemoveItem = async (productID) => {
         const storedUser = localStorage.getItem('user');
@@ -33,17 +39,26 @@ const CartHandler = ({ cartItems, refreshCart }) => {
                     customerID: user.customerID,
                     productID,
                 });
-                refreshCart();
+                refreshCart(); // Refresh cart immediately after removing item
             } catch (error) {
                 console.error('Error removing item from cart:', error);
             }
         }
     };
 
+    const handleApplyDiscountCode = () => {
+        if (discountCode === 'newcustomer') {
+            setIsDiscountApplied(true);
+            setDiscountError('');
+            alert('Discount code applied');
+        } else {
+            setIsDiscountApplied(false);
+            alert('Invalid code');
+        }
+    };
+
     const handlePurchase = () => {
         if (user && cartItems.length > 0) {
-            const total = calculateTotal();
-            setTotalCost(total);
             setShowPurchaseOverlay(true);
         }
     };
@@ -54,7 +69,7 @@ const CartHandler = ({ cartItems, refreshCart }) => {
                 await axios.post('http://localhost:4000/cart/purchase', {
                     customerID: user.customerID,
                 });
-                alert(`Thank you for your purchase! Your items should arrive in ${shippingOption === 'express' ? '3' : '5'} days.`);
+                alert(`Thank you for your purchase! Total cost: $${totalCost.toFixed(2)}. Your items should arrive in ${shippingOption === 'express' ? '3' : '5'} days.`);
                 refreshCart();
                 setShowPurchaseOverlay(false);
             } catch (error) {
@@ -95,6 +110,8 @@ const CartHandler = ({ cartItems, refreshCart }) => {
                         value={discountCode}
                         onChange={(e) => setDiscountCode(e.target.value)}
                     />
+                    <button onClick={handleApplyDiscountCode}>Apply Code</button>
+                    {discountError && <p className='error'>{discountError}</p>}
                     <div>
                         <label>
                             <input
