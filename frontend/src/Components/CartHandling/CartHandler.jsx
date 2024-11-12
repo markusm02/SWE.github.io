@@ -9,6 +9,8 @@ const CartHandler = ({ cartItems, refreshCart }) => {
     const [user, setUser] = useState(null);
     const [isDiscountApplied, setIsDiscountApplied] = useState(false);
     const [discountError, setDiscountError] = useState('');
+    const [cardNumber, setCardNumber] = useState('');
+
     const TAX_RATE = 0.0825;
     const EXPRESS_SHIPPING_COST = 8.00;
 
@@ -112,6 +114,12 @@ const CartHandler = ({ cartItems, refreshCart }) => {
                     />
                     <button onClick={handleApplyDiscountCode}>Apply Code</button>
                     {discountError && <p className='error'>{discountError}</p>}
+                    <input
+                        type='text'
+                        placeholder='Card Number'
+                        value={cardNumber}
+                        onChange={(e) => setCardNumber(e.target.value)}
+                    />
                     <div>
                         <label>
                             <input
