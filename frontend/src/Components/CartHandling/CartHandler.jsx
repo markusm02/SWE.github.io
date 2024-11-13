@@ -89,6 +89,8 @@ const CartHandler = ({ cartItems, refreshCart }) => {
                         <li key={index}>
                             <p>{item.productName}</p>
                             <p>Quantity: {item.quantity}</p>
+                            <p>Size: {item.size}</p>
+                            <p>Color: {item.color}</p>
                             <p>Price: ${item.price}</p>
                             <button onClick={() => handleRemoveItem(item.productID)}>Remove</button>
                         </li>

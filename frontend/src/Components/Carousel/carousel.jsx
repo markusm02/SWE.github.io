@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
-import Slider from 'react-slick';
-import { useNavigate } from 'react-router-dom';
+import ProductCard from '../ProductCard/productcard.jsx';
 import images from '../../Utils/importImages.js';
 import '../../Styles/carousel.css';
 
 const Carousel = ({ items }) => {
 
   const [currentIndex, setCurrentIndex] = useState(0);
-  const navigate = useNavigate();
+  const [showOverlay, setShowOverlay] = useState(false);
   const currentItem = items.length > 0 ? items[currentIndex] : null;
   // Upload images and match with product ID instead of category
   const imageNameTest = currentItem ? `${currentItem.productCategory}.jpg` : '';
@@ -22,8 +21,15 @@ const Carousel = ({ items }) => {
   };
 
   const handleItemClick = (productID) => {
-    navigate(`/products/${productID}`);
+    setShowOverlay(true);
   };
+
+  const handleAddToCart = (product, size) => {
+    // Implement add to cart functionality here
+
+    console.log(`Added ${product.productName} of size ${size} to cart`);
+  };
+  console.log('Current Item:', currentItem);
 
   return (
     <div className='carousel'>
@@ -34,7 +40,7 @@ const Carousel = ({ items }) => {
               src={imageSrc} 
               alt={items[currentIndex].productName} 
               className='item-image'
-              onClick={() => handleItemClick(items[currentIndex].productID)}
+              onClick={handleItemClick}
             />
           ):(
             <p>No image found</p>
@@ -44,6 +50,13 @@ const Carousel = ({ items }) => {
       )}
       <button onClick={handlePrev} className='carousel-button'>Previous</button>
       <button onClick={handleNext} className='carousel-button'>Next</button>
+      {showOverlay && currentItem && (
+        <ProductCard 
+          product={{ ...currentItem, imageSrc }} 
+          onClose={() => setShowOverlay(false)} 
+          addToCart={handleAddToCart}
+                />
+            )}
     </div>
   );
 };

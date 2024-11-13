@@ -67,7 +67,7 @@ router.post('/purchase', async (req, res) => {
 });
 
 router.post('/addItem', async (req, res) => {
-    const { customerID, productName, productID, quantity, price } = req.body;
+    const { customerID, productName, productID, quantity, price, size, color } = req.body;
     try {
         // Fetch the current cart
         const getParams = {
@@ -79,7 +79,7 @@ router.post('/addItem', async (req, res) => {
         const currentCart = data.Item.currentCart || [];
 
         // Add the new item to the cart
-        const updatedCart = [...currentCart, { productName, productID, quantity, price }];
+        const updatedCart = [...currentCart, { productName, productID, quantity, price, size, color }];
 
         // Update the cart in the database
         const updateParams = {
