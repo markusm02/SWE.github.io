@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import '../../Styles/CartHandler.css';
 import axios from 'axios';
 
 const CartHandler = ({ cartItems, refreshCart }) => {
@@ -10,6 +11,8 @@ const CartHandler = ({ cartItems, refreshCart }) => {
     const [isDiscountApplied, setIsDiscountApplied] = useState(false);
     const [discountError, setDiscountError] = useState('');
     const [cardNumber, setCardNumber] = useState('');
+    const [cardError, setCardError] = useState('');
+    const [isPurchaseExpanded, setIsPurchaseExpanded] = useState(false);
 
     const TAX_RATE = 0.0825;
     const EXPRESS_SHIPPING_COST = 8.00;
@@ -23,10 +26,13 @@ const CartHandler = ({ cartItems, refreshCart }) => {
 
     useEffect(() => {
         const calculateTotal = () => {
-            let subtotal = cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0);
+            let subtotal = cartItems.reduce((acc, item) => {
+                return acc + (item.price * item.quantity);
+            }, 0);
             let tax = subtotal * TAX_RATE;
             let shippingCost = shippingOption === 'express' ? EXPRESS_SHIPPING_COST : 0;
-            let discount = isDiscountApplied && discountCode === 'newcustomer' ? 0.1 * (subtotal + tax + shippingCost) : 0;
+            let discount = isDiscountApplied && discountCode === 'newcustomer' ? 
+                0.1 * (subtotal + tax + shippingCost) : 0;
             return subtotal + tax + shippingCost - discount;
         };
         setTotalCost(calculateTotal());
@@ -41,7 +47,7 @@ const CartHandler = ({ cartItems, refreshCart }) => {
                     customerID: user.customerID,
                     productID,
                 });
-                refreshCart(); // Refresh cart immediately after removing item
+                refreshCart();
             } catch (error) {
                 console.error('Error removing item from cart:', error);
             }
@@ -52,20 +58,39 @@ const CartHandler = ({ cartItems, refreshCart }) => {
         if (discountCode === 'newcustomer') {
             setIsDiscountApplied(true);
             setDiscountError('');
-            alert('Discount code applied');
+            alert('Discount code applied successfully!');
         } else {
             setIsDiscountApplied(false);
-            alert('Invalid code');
+            setDiscountError('Invalid discount code');
         }
     };
 
     const handlePurchase = () => {
         if (user && cartItems.length > 0) {
-            setShowPurchaseOverlay(true);
+            setIsPurchaseExpanded(!isPurchaseExpanded);
+            setShowPurchaseOverlay(!isPurchaseExpanded);
+        }
+    };
+
+    const handleCardNumberChange = (e) => {
+        const value = e.target.value;
+        if (value === '' || /^\d+$/.test(value)) {
+            setCardNumber(value);
+            setCardError('');
         }
     };
 
     const completePurchase = async () => {
+        if (!cardNumber) {
+            setCardError('Please enter a card number');
+            return;
+        }
+
+        if (!/^\d+$/.test(cardNumber)) {
+            setCardError('Card number must contain only numbers');
+            return;
+        }
+
         if (user) {
             try {
                 await axios.post('http://localhost:4000/cart/purchase', {
@@ -74,6 +99,8 @@ const CartHandler = ({ cartItems, refreshCart }) => {
                 alert(`Thank you for your purchase! Total cost: $${totalCost.toFixed(2)}. Your items should arrive in ${shippingOption === 'express' ? '3' : '5'} days.`);
                 refreshCart();
                 setShowPurchaseOverlay(false);
+                setCardNumber('');
+                setCardError('');
             } catch (error) {
                 console.error('Error during purchase:', error);
             }
@@ -84,45 +111,61 @@ const CartHandler = ({ cartItems, refreshCart }) => {
         <div className='cart-handler'>
             <h3>Your Cart</h3>
             {cartItems.length > 0 ? (
-                <ul>
-                    {cartItems.map((item, index) => (
-                        <li key={index}>
-                            <p>{item.productName}</p>
-                            <p>Quantity: {item.quantity}</p>
-                            <p>Size: {item.size}</p>
-                            <p>Color: {item.color}</p>
-                            <p>Price: ${item.price}</p>
-                            <button onClick={() => handleRemoveItem(item.productID)}>Remove</button>
-                        </li>
-                    ))}
-                </ul>
+                <>
+                    <ul>
+                        {cartItems.map((item, index) => (
+                            <li key={index} className='cart-item'>
+                                <p className='item-name'>{item.productName}</p>
+                                <p className='item-size'>Size: {item.size}</p>
+                                <p className='item-color'>Color: {item.color}</p>
+                                <p className='item-price'>Price: ${item.price}</p>
+                                <p className='item-quantity'>Quantity: {item.quantity}</p>
+                                <button className='remove-button' onClick={() => handleRemoveItem(item.productID)}>
+                                    Remove
+                                </button>
+                            </li>
+                        ))}
+                    </ul>
+                    <button className='purchase-button' onClick={handlePurchase}>
+                        {isPurchaseExpanded ? 'Collapse' : 'Purchase'}
+                    </button>
+                </>
             ) : (
-                <p>Your cart is empty.</p>
+                <p className='empty-cart'>Your cart is empty.</p>
             )}
-            {cartItems.length > 0 && (
-                <button onClick={handlePurchase}>Purchase</button>
-            )}
-
+            
             {showPurchaseOverlay && user && (
-                <div className='purchase-overlay'>
+                <div className={`purchase-overlay ${isPurchaseExpanded ? 'expanded' : ''}`}>
                     <h3>Purchase Summary</h3>
-                    <p>Total Cost: ${totalCost.toFixed(2)}</p>
-                    <p>Shipping Address: {user.addresses[0].streetAddress}, {user.addresses[0].city}, {user.addresses[0].state}, {user.addresses[0].zipCode}</p>
-                    <input
-                        type='text'
-                        placeholder='Discount Code'
-                        value={discountCode}
-                        onChange={(e) => setDiscountCode(e.target.value)}
-                    />
-                    <button onClick={handleApplyDiscountCode}>Apply Code</button>
-                    {discountError && <p className='error'>{discountError}</p>}
-                    <input
-                        type='text'
-                        placeholder='Card Number'
-                        value={cardNumber}
-                        onChange={(e) => setCardNumber(e.target.value)}
-                    />
-                    <div>
+                    <p className='total-cost'>Total Cost: ${totalCost.toFixed(2)}</p>
+                    <p className='shipping-address'>
+                        Shipping Address: {user.addresses[0].streetAddress}, {user.addresses[0].city}, {user.addresses[0].state}, {user.addresses[0].zipCode}
+                    </p>
+                    
+                    <div className='discount-section'>
+                        <input
+                            type='text'
+                            placeholder='Discount Code'
+                            value={discountCode}
+                            onChange={(e) => setDiscountCode(e.target.value)}
+                        />
+                        <button onClick={handleApplyDiscountCode}>Apply Code</button>
+                        {discountError && <p className='discount-error'>{discountError}</p>}
+                    </div>
+
+                    <div className='card-input-section'>
+                        <input
+                            type='text'
+                            placeholder='Card Number'
+                            className={`card-input ${cardError ? 'error' : ''}`}
+                            value={cardNumber}
+                            onChange={handleCardNumberChange}
+                            maxLength={16}
+                        />
+                        {cardError && <p className='card-error'>{cardError}</p>}
+                    </div>
+
+                    <div className='shipping-options'>
                         <label>
                             <input
                                 type='radio'
@@ -130,7 +173,7 @@ const CartHandler = ({ cartItems, refreshCart }) => {
                                 checked={shippingOption === 'regular'}
                                 onChange={() => setShippingOption('regular')}
                             />
-                            Regular (5 days)
+                            Regular (5 days) Free
                         </label>
                         <label>
                             <input
@@ -142,7 +185,10 @@ const CartHandler = ({ cartItems, refreshCart }) => {
                             Express (3 days) + $8.00
                         </label>
                     </div>
-                    <button onClick={completePurchase}>Complete Purchase</button>
+
+                    <button className='complete-purchase-button' onClick={completePurchase}>
+                        Complete Purchase
+                    </button>
                 </div>
             )}
         </div>

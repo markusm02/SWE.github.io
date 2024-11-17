@@ -1,33 +1,39 @@
 .product-card-overlay {
     position: fixed;
-    top: 100px;
+    top: 0;
     left: 0;
-    width: 300px;
+    width: 100%;
     height: 100%;
-    background-color: white;
-    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
-    z-index: 20;
-    padding: 20px;
-    overflow-y: auto;
-    border-radius: 8px;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
 }
 
 .product-details {
-    background: #fff;
+    position: relative;
+    background-color: white;
     padding: 20px;
     border-radius: 8px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-}
-
-.product-image {
+    max-width: 500px;
     width: 100%;
-    height: auto;
-    border-radius: 8px;
-    margin-bottom: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
-.size-selection, .color-selection {
-    margin-bottom: 10px;
+.product-details .product-image {
+    width: 300px;
+    height: 300px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 15px;
+}
+
+.size-selection, .color-selection, .quantity-selection {
+    margin-bottom: 15px;
+    width: 100%;
 }
 
 .close-button {
@@ -38,4 +44,69 @@
     border: none;
     font-size: 1.5em;
     cursor: pointer;
+    color: #333;
+}
+
+.size-selection select, .color-selection select, .quantity-selection select {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.size-selection label, .color-selection label, .quantity-selection label {
+    display: block;
+    margin-bottom: 5px;
+    color: #333;
+}
+
+
+.product-details button:not(.close-button) {
+    width: 100%;
+    padding: 10px;
+    background-color: #333;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.product-details button:not(.close-button):hover {
+    background-color: #444;
+}
+
+.product-details h3 {
+    margin: 10px 0;
+    font-size: 1.2em;
+    color: #333;
+    width: 100%;
+    text-align: center;
+}
+
+.product-details p {
+    color: #666;
+    margin: 5px 0;
+    width: 100%;
+    text-align: center;
+}
+
+.quantity-selection {
+    margin-bottom: 15px;
+    width: 100%;
+}
+
+.quantity-selection label {
+    display: block;
+    margin-bottom: 5px;
+    color: #333;
+}
+
+.quantity-selection select {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
 }

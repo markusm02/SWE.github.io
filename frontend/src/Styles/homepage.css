@@ -1,18 +1,27 @@
 .home-page {
     background-color: #ffffff;
     padding-top: 40px;
+    margin: 0 auto;
 }
 
-.featured-section, .categories-section {
-    max-width: 1200px;
+.featured-section {
+    max-width: 20%;
     margin: auto;
     padding: 10px;
     text-align: center;
 }
 
+.categories-section {
+    max-width: 85%;
+    margin: auto;
+    padding: 10px;
+    text-align: center;
+    
+}
+
 h2 {
     margin-bottom: 20px;
-    font-size: 3em;
+    font-size: 2.5em;
     color: #333;
 }
 
@@ -22,3 +31,6 @@ h2 {
     justify-content: flex-start;
     gap: 20px;
   }
+
+
+  

@@ -1,29 +1,28 @@
 import React, { useState, useEffect, useRef } from 'react';
+import images from '../../Utils/importImages.js'; 
 import '../../Styles/productCard.css';
-import images from '../../Utils/importImages.js';
 import axios from 'axios';
 
-const ProductCard = ({ product, onClose, addToCart }) => {
+const AllProductsCard = ({ product, onClose, addToCart }) => {
     const [selectedSize, setSelectedSize] = useState('');
-    const [selectedColor, setSelectedColor] = useState(product.featuredProduct.color || '');
-    const [allProducts, setAllProducts] = useState([]);
+    const [selectedColor, setSelectedColor] = useState(product.color || '');
     const [currentProduct, setCurrentProduct] = useState(product);
-    const [imageSrc, setImageSrc] = useState(images[`image_${product.featuredProduct.productID}.jpg`]);
+    const [imageSrc, setImageSrc] = useState(images[product.imageName]);
     const overlayRef = useRef(null);
     const [quantity, setQuantity] = useState(1);
 
     useEffect(() => {
-        if (selectedColor) {
-            const newProduct = allProducts.find(p => p.color === selectedColor && p.productName === product.featuredProduct.productName);
+        if (selectedColor && product.variants) {
+            const newProduct = product.variants.find(p => p.color === selectedColor);
             if (newProduct) {
                 setCurrentProduct(newProduct);
             }
         }
-    }, [selectedColor, allProducts, product.featuredProduct.productName]);
+    }, [selectedColor, product.variants]);
 
     useEffect(() => {
         if (currentProduct) {
-            setImageSrc(images[`image_${currentProduct.featuredProduct.productID}.jpg`]);
+            setImageSrc(images[currentProduct.imageName]);
         }
     }, [currentProduct]);
 
@@ -35,10 +34,10 @@ const ProductCard = ({ product, onClose, addToCart }) => {
                     const user = JSON.parse(storedUser);
                     await axios.post('http://localhost:4000/cart/addItem', {
                         customerID: user.customerID,
-                        productName: currentProduct.featuredProduct.productName,
-                        productID: currentProduct.featuredProduct.productID,
+                        productName: currentProduct.productName,
+                        productID: currentProduct.productID,
                         quantity: quantity,
-                        price: currentProduct.featuredProduct.price,
+                        price: currentProduct.price,
                         size: selectedSize,
                         color: selectedColor,
                     });
@@ -57,48 +56,36 @@ const ProductCard = ({ product, onClose, addToCart }) => {
         }
     };
 
-    const handleClickOutside = (event) => {
-        if (overlayRef.current && !overlayRef.current.contains(event.target)) {
-            onClose();
-        }
+    const handleColorChange = (event) => {
+        setSelectedColor(event.target.value);
     };
-
-    useEffect(() => {
-        document.addEventListener('mousedown', handleClickOutside);
-        return () => {
-            document.removeEventListener('mousedown', handleClickOutside);
-        };
-    }, []);
 
     return (
         <div className='product-card-overlay' ref={overlayRef}>
             <div className='product-details'>
-            <button className='close-button' onClick={onClose}>×</button>
+                <button className='close-button' onClick={onClose}>×</button>
                 {imageSrc ? (
                     <img src={imageSrc} alt={currentProduct.productName} className='product-image' />
                 ) : (
                     <p>No image available</p>
                 )}
-                <h3>{currentProduct.featuredProduct.productName}</h3>
-                <p>{currentProduct.featuredProduct.productDescription}</p>
-                <p>{currentProduct.featuredProduct.price}</p>
+                <h3>{currentProduct.productName}</h3>
+                <p>{currentProduct.productDescription}</p>
+                <p>{currentProduct.price}</p>
                 <div className='size-selection'>
                     <label>Select Size:</label>
                     <select value={selectedSize} onChange={(e) => setSelectedSize(e.target.value)}>
                         <option value=''>Select</option>
-                        {currentProduct.featuredProduct.availableStock && Object.keys(currentProduct.featuredProduct.availableStock).map((size) => (
+                        {currentProduct.availableStock && Object.keys(currentProduct.availableStock).map((size) => (
                             <option key={size} value={size}>{size}</option>
                         ))}
                     </select>
                 </div>
-                <div className>
-
-                </div>
                 <div className='color-selection'>
                     <label>Select Color:</label>
-                    <select value={selectedColor} onChange={(e) => setSelectedColor(e.target.value)}>
+                    <select value={selectedColor} onChange={handleColorChange}>
                         <option value=''>Select</option>
-                        {currentProduct.availableColors && currentProduct.availableColors.map((color, index) => (
+                        {product.availableColors && product.availableColors.map((color, index) => (
                             <option key={index} value={color}>{color}</option>
                         ))}
                     </select>
@@ -120,4 +107,4 @@ const ProductCard = ({ product, onClose, addToCart }) => {
     );
 };
 
-export default ProductCard;
+export default AllProductsCard;

@@ -67,24 +67,25 @@ const Navbar = ({toggleBlur}) => {
                     <Link to="/" className='home-button'>Urban Threads</Link>
                 </div>
                 <div className='shop-all'>
-                    <Link to="/shop" className='shop-now-button'>Shop All</Link>
+                    <Link to="/shop-all" className='shop-now-button'>Shop All</Link>
                 </div>
-                <div classname='current-cart'>
+                <div className='button-group'>
                     <button className='cart-button' onClick={handleCartClick}>
                         Cart
                     </button>
-                </div>
-                <div className='account'>
                     <button className='account-button' onClick={handleAccountClick}>
                         Account
                     </button>
                 </div>
             </div>
             {(showCart || showAccount) && (
-                <div className='overlay' ref={overlayRef}>
-                    {showCart && <CartHandler cartItems={cartItems} refreshCart={refreshCart}/>}
-                    {showAccount && <AccountHandling toggleBlur={toggleBlur} />}
-                </div>
+                <>
+                    <div className='overlay-background'></div>
+                    <div className='overlay' ref={overlayRef}>
+                        {showCart && <CartHandler cartItems={cartItems} refreshCart={refreshCart}/>}
+                        {showAccount && <AccountHandling toggleBlur={toggleBlur}/>}
+                    </div>
+                </>
             )}
         </div>
     );

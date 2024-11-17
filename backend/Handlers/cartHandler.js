@@ -13,7 +13,6 @@ router.post('/removeItem', async (req, res) => {
     const { customerID, productID } = req.body;
 
     try {
-        // Fetch the current cart
         const getParams = {
             TableName: TABLE_NAME,
             Key: { customerID },
@@ -22,10 +21,8 @@ router.post('/removeItem', async (req, res) => {
         const data = await dynamoDB.get(getParams).promise();
         const currentCart = data.Item.currentCart || [];
 
-        // Filter out the item to be removed
         const updatedCart = currentCart.filter(item => item.productID !== productID);
 
-        // Update the cart in the database
         const updateParams = {
             TableName: TABLE_NAME,
             Key: { customerID },
@@ -69,7 +66,6 @@ router.post('/purchase', async (req, res) => {
 router.post('/addItem', async (req, res) => {
     const { customerID, productName, productID, quantity, price, size, color } = req.body;
     try {
-        // Fetch the current cart
         const getParams = {
             TableName: TABLE_NAME,
             Key: { customerID },
@@ -78,10 +74,8 @@ router.post('/addItem', async (req, res) => {
         const data = await dynamoDB.get(getParams).promise();
         const currentCart = data.Item.currentCart || [];
 
-        // Add the new item to the cart
         const updatedCart = [...currentCart, { productName, productID, quantity, price, size, color }];
 
-        // Update the cart in the database
         const updateParams = {
             TableName: TABLE_NAME,
             Key: { customerID },

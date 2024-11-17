@@ -51,7 +51,6 @@ const testCustomer1 = {
         "paymentMethod": "credit-card"
      }], 
     "addresses": [{ 
-        "addressId": "Test Address AVE", 
         "streetAddress": "123 Street Name", 
         "city": "San Antonio", 
         "state": "TX", 
@@ -110,6 +109,46 @@ const testProduct2 = {
 	"images": ["image3_url", "image4_url"]
 };
 
+const testProduct3 = {
+    "categoryID":2,
+    "categoryName":"dress pants",
+    "availableColors":["black","blue"],
+    "availableSizes":["M","L","XL"],
+    "categoryImageName":"category_image_2.jpg",
+    "categoryImageURL":"https://example.com/category_image_2.jpg",
+    "Products":[
+        {
+            "productID":3,
+            "productName": "Dress Pants",
+            "productDescription":"A classic dress pant.",
+            "price":49.99,
+            "color":"black",
+            "availableStock":{
+                "M":15,
+                "L":10,
+                "XL":5
+            },
+            "imageName":"image_3.jpg",
+            "imageURL":"https://example.com/image_3.jpg"
+        },
+        {
+            "productID":4,
+            "productName": "Dress Pants",
+            "productDescription":"A classic dress pant.",
+            "price":49.99,
+            "color":"blue",
+            "availableStock":{
+                "M":15,
+                "L":10,
+                "XL":5
+            },
+            "imageName":"image_4.jpg",
+            "imageURL":"https://example.com/image_4.jpg"
+        }
+
+    ]
+};
+
 // Test data for a product
 const testProduct = {
     productId: '1',
@@ -128,7 +167,7 @@ const testProduct = {
 (async () => {
     try {
         await addCustomer(testCustomer1);
-        await addProduct(testProduct2);
+        await addProduct(testProduct3);
         console.log('Test data inserted successfully!');
     } catch (error) {
         console.error('Error inserting test data:', error);

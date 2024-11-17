@@ -19,8 +19,6 @@ const getUsers = async (req, res) => {
 
 const getUserById = async (req, res) => {
     const { id } = req.params;
-    console.log(req.params);
-    console.log(`Fetching user with ID: ${id}`);
     const params = {
       TableName: 'urbanThreadsUsers',
       Key: {
@@ -35,6 +33,7 @@ const getUserById = async (req, res) => {
       } else {
         res.status(404).json({ error: 'User not found' });
       }
+      console.log(data.Item);
     } catch (err) {
       console.error('Error fetching user by ID:', err);
       res.status(500).json({ error: 'Could not fetch user' });

@@ -1,86 +1,177 @@
 .navbar {
     position: relative;
-    z-index: 10;
+    z-index: 100;
     top: -1px;
     width: 80%;
     left: 50%;
     transform: translateX(-50%);
-    background-color: #ececec;
-    box-shadow: 0 0 5rem #0000008a;
-    padding: 10px 0;
+    background-color: #ffffff;
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+    padding: 15px 0;
     border-bottom-left-radius: 2rem;
     border-bottom-right-radius: 2rem;
-    border: 1px solid #00000042;
+    border: 1px solid rgba(0, 0, 0, 0.1);
 }
 
 .navbar-content {
-    display: flex;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
     padding: 0 40px;
+    max-width: 1200px;
+    margin: 0 auto;
+    gap: 20px;
 }
 
 .company-name {
+    flex: 1;
     text-align: start;
-    margin-top: 5px;
 }
-
 
 .home-button {
     text-decoration: none;
-    font-size: 1.2em;
+    font-size: 1.8em;
     font-weight: bold;
-    transition: background-color 0.3s;
-    border-radius: 5px;
     color: #333;
-    font-family: 'Courier New', Courier, monospace;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    transition: color 0.3s ease;
+}
+
+.home-button:hover {
+    color: #666;
 }
 
 .shop-all {
-    text-align: center;
-    margin-top: 8px;
+    justify-self: center;
+}
+
+.button-group {
+    justify-self: end;
+    display: flex;
+    gap: 15px;
+    padding-right: 20px;
+}
+
+.shop-now-button, .cart-button, .account-button {
+    text-decoration: none;
+    color: #333;
+    padding: 10px 20px;
+    border: 2px solid #333;
+    border-radius: 15px;
+    transition: all 0.3s ease;
+    background-color: transparent;
+    font-size: 0.9em;
+    font-weight: 500;
+    cursor: pointer;
+    margin: 0 10px;
+}
+
+.shop-now-button:hover, .cart-button:hover, .account-button:hover {
+    background-color: #333;
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
 .current-cart {
+    flex: 1;
     text-align: right;
 }
 
-
-.account-button, .cart-button, .shop-now-button {
-    text-decoration: none;
-    color: #000000;
-    padding: 10px 20px;
-    border: 1px solid #00000042;
-    border-radius: 5px;
-    transition: background-color 0.3s;
-    
-}
-
-.account-button:hover, .cart-button:hover, .shop-now-button:hover {
-    background-color: #ddd;
+.account {
+    flex: 0;
+    margin-left: 20px;
 }
 
 .overlay {
     position: fixed;
-    top: 100px;
-    right: 0;
-    width: 300px;
-    height:1200%;
+    top: 80px;
+    right: 10px;
+    width: 350px;
+    height: auto;
+    min-height: 300px;
+    max-height: calc(100vh - 150px);
     background-color: white;
-    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.5);
-    z-index: 20;
+    box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
     padding: 20px;
     overflow-y: auto;
-  }
-  
-  .cart-content,
-  .account-content {
-    background: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-  }
-  
-  .blur-background {
-    filter: blur(5px);
-    transition: all 0.3s ease;
-  }
+    border-left: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 15px;
+    z-index: 10000;
+    animation: slideIn 0.3s ease-out;
+}
+
+.overlay::-webkit-scrollbar {
+    width: 8px;
+}
+
+.overlay::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+}
+
+.overlay::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 4px;
+}
+
+.overlay::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+.overlay-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+
+
+@media (max-width: 768px) {
+    .navbar {
+        width: 95%;
+        padding: 10px 0;
+    }
+    
+
+    .navbar-content {
+        padding: 0 20px;
+        flex-wrap: wrap;
+    }
+
+    .company-name {
+        flex: 1;
+        text-align: center;
+        margin-bottom: 10px;
+    }
+
+    .home-button {
+        font-size: 1.2em;
+    }
+
+    .shop-now-button, .cart-button, .account-button {
+        padding: 8px 15px;
+        font-size: 0.8em;
+    }
+
+    .overlay {
+        width: 100%;
+        top: 120px;
+    }
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(80%);
+    }
+    to {
+        transform: translateX(0);
+    }
+}
+
+.overlay {
+    animation: slideIn 0.3s ease-out;
+}

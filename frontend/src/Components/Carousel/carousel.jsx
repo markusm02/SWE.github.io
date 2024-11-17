@@ -1,51 +1,48 @@
 import React, { useState } from 'react';
-import ProductCard from '../ProductCard/productcard.jsx';
+import ProductCard from '../ProductCard/productCard.jsx';
 import images from '../../Utils/importImages.js';
 import '../../Styles/carousel.css';
 
-const Carousel = ({ items }) => {
+const Carousel = ({ featuredItems, allProducts }) => {
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const [showOverlay, setShowOverlay] = useState(false);
-  const currentItem = items.length > 0 ? items[currentIndex] : null;
-  // Upload images and match with product ID instead of category
-  const imageNameTest = currentItem ? `${currentItem.productCategory}.jpg` : '';
-  const imageSrc = images[imageNameTest];
+  const currentItem = featuredItems.length > 0 ? featuredItems[currentIndex] : null;
+  const imageName = currentItem ? `image_${currentItem.featuredProduct.productID}.jpg` : '';
+  const imageSrc = images[imageName];
 
   const handleNext = () => {
-    setCurrentIndex((prevIndex) => (prevIndex + 1) % items.length);
+    setCurrentIndex((prevIndex) => (prevIndex + 1) % featuredItems.length);
   };
 
   const handlePrev = () => {
-    setCurrentIndex((prevIndex) => (prevIndex - 1 + items.length) % items.length);
+    setCurrentIndex((prevIndex) => (prevIndex - 1 + featuredItems.length) % featuredItems.length);
   };
 
-  const handleItemClick = (productID) => {
+  const handleItemClick = () => {
     setShowOverlay(true);
   };
 
   const handleAddToCart = (product, size) => {
-    // Implement add to cart functionality here
-
     console.log(`Added ${product.productName} of size ${size} to cart`);
   };
-  console.log('Current Item:', currentItem);
 
   return (
     <div className='carousel'>
-      {items.length > 0 && (
-        <div className='carousel-item'>
+      {featuredItems.length > 0 && (
+        <div className='carousel-item' onClick={handleItemClick}>
           {imageSrc ? (
             <img 
               src={imageSrc} 
-              alt={items[currentIndex].productName} 
+              alt={featuredItems[currentIndex].featuredProduct.productName} 
               className='item-image'
-              onClick={handleItemClick}
             />
-          ):(
-            <p>No image found</p>
+          ) : (
+            <div className='placeholder-image'>
+              <p>No image available</p>
+            </div>
           )}
-          <p>{items[currentIndex].productName}</p>
+          <p>{featuredItems[currentIndex].featuredProduct.productName}</p>
         </div>
       )}
       <button onClick={handlePrev} className='carousel-button'>Previous</button>
@@ -55,8 +52,8 @@ const Carousel = ({ items }) => {
           product={{ ...currentItem, imageSrc }} 
           onClose={() => setShowOverlay(false)} 
           addToCart={handleAddToCart}
-                />
-            )}
+        />
+      )}
     </div>
   );
 };

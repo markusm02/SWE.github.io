@@ -2,8 +2,9 @@ import './App.css';
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import HomePage from './Pages/HomePage'; 
-import ProductPage from './Pages/ProductPage';
 import Navbar from './Components/Navbar/navbar';
+import ShopAllPage from './Pages/shopAllPage';
+import CategoryPage from './Pages/categoryPage';
 
 function App() {
   const [isBlurred, setIsBlurred] = useState(false);
@@ -14,8 +15,8 @@ function App() {
       <div className={isBlurred ? 'blur-background' : ''}>
         <Routes>
           <Route path="/" element={<HomePage />} />
-          <Route path="/product/:id" element={<ProductPage />} />
-          <Route path="/categories/:category" element={<categoryPage />} />
+          <Route path="/shop-all" element={<ShopAllPage />} />
+          <Route path="/categories/:categoryID" element={<CategoryPage />} />
         </Routes>
       </div>
     </Router>

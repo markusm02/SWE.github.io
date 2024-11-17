@@ -5,29 +5,31 @@ import images from '../../Utils/importImages.js';
 
 const CategoryCard = ({ category }) => {
     const navigate = useNavigate();
-    const imageName = `${category}.jpg`;
+    const imageName = `category_image_${category.categoryID}.jpg`;
     const imageSrc = images[imageName];
 
-    const handleItemClick = (category) => {
-        navigate(`/categories/${category}`);
-      };
+    const handleItemClick = () => {
+        navigate(`/categories/${category.categoryID}`);
+    };
 
-
-  return (
-    <div className='category-card'>
-        {imageSrc ? (
-          <img 
-            src={imageSrc} 
-            alt={category} 
-            className='category-image' 
-            onClick={() => handleItemClick(category)}
-          />  
-        ): (
-            <p>No image found</p>
-        )}
-      <p>{category}</p>
-    </div>
-  );
+    return (
+        <div className='category-card' onClick={handleItemClick}>
+            <div className='category-image-container'>
+                {imageSrc ? (
+                    <img 
+                        src={imageSrc} 
+                        alt={category.categoryName} 
+                        className='category-image'
+                    />  
+                ) : (
+                    <p>No image found</p>
+                )}
+            </div>
+            <div className='category-name'>
+                <p>{category.categoryName}</p>
+            </div>
+        </div>
+    );
 };
 
 export default CategoryCard;

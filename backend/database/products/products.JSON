@@ -1,25 +1,82 @@
-{ "Products": 
-	[ 
-	{ 
-		"id": "1", 
-		"name": "Classic T-Shirt", 
-		"category": "shirts", 
-		"size": ["S", "M", "L", "XL"], 
-		"color": ["white", "black", "blue"], 
-		"price": 19.99, 
-		"stock": { "S": 50, "M": 40, "L": 60, "XL": 30 }, 
-		"description": "A classic cotton t-shirt.", 
-		"images": ["image1_url", "image2_url"] 
-	}, 
-	{ 
-		"id": "2", 
-		"name": "Winter Jacket", 
-		"category": "jackets", 
-		"size": ["M", "L", "XL"], 
-		"color": ["black", "gray"], 
-		"price": 89.99, 
-		"stock": { "M": 15, "L": 10, "XL": 5 }, 
-		"description": "Warm winter jacket with water resistance.", "images": ["image3_url", "image4_url"] 
+[
+	{
+		"categoryID":1,
+		"categoryName":"T-shirts",
+		"availableColors":["white","black","blue"],
+		"availableSizes":["S","M","L","XL"],
+		"categoryImageName":"category_image_1.jpg",
+		"categoryImageURL":"https://example.com/category_image_1.jpg",
+		"Products":[
+			{
+				"productID":1,
+				"productName":"Classic T-Shirt",
+				"productDescription":"A classic cotton t-shirt.",
+				"price":19.99,
+				"color":"white",
+				"availableStock":{
+					"S":50,
+					"M":40,
+					"L":60,
+					"XL":30
+				},
+				"imageName":"image_1.jpg",
+				"imageURL":"https://example.com/image_1.jpg"
+			},
+			{
+				"productID":2,
+				"productName": "Classic T-Shirt",
+				"productDescription":"A classic cotton t-shirt.",
+				"price":19.99,
+				"color":"black",
+				"availableStock":{
+					"S":50,
+					"M":40,
+					"L":60,
+					"XL":30
+				},
+				"imageName":"image_2.jpg",
+				"imageURL":"https://example.com/image_2.jpg"
+			}
+
+		]
+	},
+	{
+		"categoryID":2,
+		"categoryName":"dress pants",
+		"availableColors":["black","blue"],
+		"availableSizes":["M","L","XL"],
+		"categoryImageName":"category_image_2.jpg",
+		"categoryImageURL":"https://example.com/category_image_2.jpg",
+		"Products":[
+			{
+				"productID":3,
+				"productName": "Dress Pants",
+				"productDescription":"A classic dress pant.",
+				"price":49.99,
+				"color":"black",
+				"availableStock":{
+					"M":15,
+					"L":10,
+					"XL":5
+				},
+				"imageName":"image_3.jpg",
+				"imageURL":"https://example.com/image_3.jpg"
+			},
+			{
+				"productID":4,
+				"productName": "Dress Pants",
+				"productDescription":"A classic dress pant.",
+				"price":49.99,
+				"color":"blue",
+				"availableStock":{
+					"M":15,
+					"L":10,
+					"XL":5
+				},
+				"imageName":"image_4.jpg",
+				"imageURL":"https://example.com/image_4.jpg"
+			}
+
+		]
 	}
- ]
-}
+]
