@@ -135,10 +135,7 @@ const AccountHandling = ({ toggleBlur }) => {
                 setError('Passwords do not match');
                 return;
             }
-
-            // Only check username if it's being changed
             if (username && username !== user.username) {
-                // Check if username exists
                 const response = await axios.get('http://localhost:4000/users/');
                 const users = response.data;
                 const usernameExists = users.some(u => u.username === username && u.customerID !== user.customerID);
@@ -171,8 +168,6 @@ const AccountHandling = ({ toggleBlur }) => {
             localStorage.setItem('user', JSON.stringify(updatedUser));
             alert(response.data.message);
             setError('');
-            
-            // Clear form fields after successful update
             setFirstName('');
             setLastName('');
             setUsername('');

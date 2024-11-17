@@ -46,7 +46,6 @@ const CategoryPage = () => {
     };
 
     const handleAddToCart = (product, size) => {
-        // Handle add to cart functionality
         console.log('Added to cart:', product, size);
     };
 

@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import AllProductsCard from '../Components/ProductCard/allProductsCard.jsx';
-import images from '../Utils/importImages.js'; // Import images
+import images from '../Utils/importImages.js';
 import '../Styles/productCard.css';
 import '../Styles/shopAllPage.css';
 
