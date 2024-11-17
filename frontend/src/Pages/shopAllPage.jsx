@@ -178,6 +178,7 @@ const ShopAllPage = () => {
                             alt={product.productName} 
                         />
                         <h3>{product.productName}</h3>
+                        <p>{product.color}</p>
                         <p>${product.price}</p>
                     </div>
                 ))}

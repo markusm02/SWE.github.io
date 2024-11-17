@@ -30,23 +30,33 @@ const Carousel = ({ featuredItems, allProducts }) => {
   return (
     <div className='carousel'>
       {featuredItems.length > 0 && (
-        <div className='carousel-item' onClick={handleItemClick}>
-          {imageSrc ? (
-            <img 
-              src={imageSrc} 
-              alt={featuredItems[currentIndex].featuredProduct.productName} 
-              className='item-image'
-            />
-          ) : (
-            <div className='placeholder-image'>
-              <p>No image available</p>
-            </div>
-          )}
-          <p>{featuredItems[currentIndex].featuredProduct.productName}</p>
-        </div>
+        <>
+          <div className='carousel-item' onClick={handleItemClick}>
+            {imageSrc ? (
+              <img 
+                src={imageSrc} 
+                alt={featuredItems[currentIndex].featuredProduct.productName} 
+                className='item-image'
+              />
+            ) : (
+              <div className='placeholder-image'>
+                <p>No image available</p>
+              </div>
+            )}
+            <p>{featuredItems[currentIndex].featuredProduct.productName}</p>
+          </div>
+          <button 
+            onClick={handlePrev} 
+            className='carousel-button prev' 
+            aria-label="Previous item"
+          />
+          <button 
+            onClick={handleNext} 
+            className='carousel-button next' 
+            aria-label="Next item"
+          />
+        </>
       )}
-      <button onClick={handlePrev} className='carousel-button'>Previous</button>
-      <button onClick={handleNext} className='carousel-button'>Next</button>
       {showOverlay && currentItem && (
         <ProductCard 
           product={{ ...currentItem, imageSrc }} 
