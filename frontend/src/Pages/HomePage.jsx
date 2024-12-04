@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import Carousel from '../Components/Carousel/carousel.jsx';
-import CategoryCard from '../Components/CategoryCard/categoryCard.jsx';
+import Carousel from '../components/Carousel/carousel.jsx';
+import CategoryCard from '../components/CategoryCard/categoryCard.jsx';
 import '../Styles/homepage.css';
 
 

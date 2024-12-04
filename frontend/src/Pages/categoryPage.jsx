@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import '../Styles/categoryPage.css';
 import images from '../Utils/importImages.js';
-import AllProductsCard from '../Components/ProductCard/allProductsCard';
+import AllProductsCard from '../components/ProductCard/allProductsCard';
 
 const CategoryPage = () => {
     const { categoryID } = useParams();
